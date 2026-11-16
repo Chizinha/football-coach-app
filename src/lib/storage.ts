@@ -1,12 +1,20 @@
 import type { Exercise } from "../types/exercise";
 import type { TrainingSession, ExerciseSnapshot } from "../types/session";
 import type { ClubPrinciplesData } from "../types/principles";
-import { SEED_EXERCISES, SEED_SESSIONS, SEED_PRINCIPLES } from "../data/seedData";
+import type { ClubTaxonomy } from "../types/settings";
+import {
+  SEED_EXERCISES,
+  SEED_SESSIONS,
+  SEED_PRINCIPLES,
+  DEFAULT_CATEGORIES,
+  DEFAULT_AGE_GROUPS,
+} from "../data/seedData";
 
 const STORAGE_KEYS = {
   EXERCISES: "football-coach-prototype:v1:exercises",
   SESSIONS: "football-coach-prototype:v1:sessions",
   PRINCIPLES: "football-coach-prototype:v1:principles",
+  TAXONOMIES: "football-coach-prototype:v1:taxonomies",
   INITIALIZED: "football-coach-prototype:v1:initialized",
 };
 
@@ -28,6 +36,12 @@ function safeSetItem(key: string, value: string): void {
   }
 }
 
+// Default taxonomy fallback
+const DEFAULT_TAXONOMY: ClubTaxonomy = {
+  categories: DEFAULT_CATEGORIES,
+  ageGroups: DEFAULT_AGE_GROUPS,
+};
+
 // Ensure initial seed data is loaded once
 export function initializeStorage(): void {
   const isInitialized = safeGetItem(STORAGE_KEYS.INITIALIZED);
@@ -41,6 +55,9 @@ export function initializeStorage(): void {
     if (!safeGetItem(STORAGE_KEYS.PRINCIPLES)) {
       safeSetItem(STORAGE_KEYS.PRINCIPLES, JSON.stringify(SEED_PRINCIPLES));
     }
+    if (!safeGetItem(STORAGE_KEYS.TAXONOMIES)) {
+      safeSetItem(STORAGE_KEYS.TAXONOMIES, JSON.stringify(DEFAULT_TAXONOMY));
+    }
     safeSetItem(STORAGE_KEYS.INITIALIZED, "true");
   }
 }
@@ -50,7 +67,181 @@ export function resetDemoData(): void {
   safeSetItem(STORAGE_KEYS.EXERCISES, JSON.stringify(SEED_EXERCISES));
   safeSetItem(STORAGE_KEYS.SESSIONS, JSON.stringify(SEED_SESSIONS));
   safeSetItem(STORAGE_KEYS.PRINCIPLES, JSON.stringify(SEED_PRINCIPLES));
+  safeSetItem(STORAGE_KEYS.TAXONOMIES, JSON.stringify(DEFAULT_TAXONOMY));
   safeSetItem(STORAGE_KEYS.INITIALIZED, "true");
+}
+
+/* ==================== TAXONOMIES (CATEGORIES & AGE GROUPS) ==================== */
+
+export function getTaxonomies(): ClubTaxonomy {
+  initializeStorage();
+  const raw = safeGetItem(STORAGE_KEYS.TAXONOMIES);
+  if (!raw) return DEFAULT_TAXONOMY;
+  try {
+    const parsed = JSON.parse(raw) as ClubTaxonomy;
+    return {
+      categories: parsed.categories?.length ? parsed.categories : DEFAULT_CATEGORIES,
+      ageGroups: parsed.ageGroups?.length ? parsed.ageGroups : DEFAULT_AGE_GROUPS,
+    };
+  } catch (e) {
+    console.error("Error parsing taxonomies from storage", e);
+    return DEFAULT_TAXONOMY;
+  }
+}
+
+export function saveTaxonomies(taxonomies: ClubTaxonomy): void {
+  safeSetItem(STORAGE_KEYS.TAXONOMIES, JSON.stringify(taxonomies));
+}
+
+// Add a new Category
+export function addCategory(name: string): boolean {
+  const trimmed = name.trim();
+  if (!trimmed) return false;
+  const current = getTaxonomies();
+  if (current.categories.some((c) => c.toLowerCase() === trimmed.toLowerCase())) {
+    return false; // Already exists
+  }
+  current.categories.push(trimmed);
+  saveTaxonomies(current);
+  return true;
+}
+
+// Update / Rename Category (and cascade to all exercises and session snapshots)
+export function updateCategory(oldName: string, newName: string): boolean {
+  const trimmed = newName.trim();
+  if (!trimmed || oldName === trimmed) return false;
+  const current = getTaxonomies();
+  const index = current.categories.indexOf(oldName);
+  if (index === -1) return false;
+
+  current.categories[index] = trimmed;
+  saveTaxonomies(current);
+
+  // Cascade update to exercises
+  const exercises = getExercises();
+  let exUpdated = false;
+  const updatedExercises = exercises.map((ex) => {
+    if (ex.theme === oldName) {
+      exUpdated = true;
+      return { ...ex, theme: trimmed };
+    }
+    return ex;
+  });
+  if (exUpdated) {
+    safeSetItem(STORAGE_KEYS.EXERCISES, JSON.stringify(updatedExercises));
+  }
+
+  // Cascade update to session snapshots
+  const sessions = getSessions();
+  let sessUpdated = false;
+  const updatedSessions = sessions.map((sess) => {
+    let sessionChanged = false;
+    let sTheme = sess.theme;
+    if (sess.theme === oldName) {
+      sTheme = trimmed;
+      sessionChanged = true;
+    }
+    const updatedItems = sess.items.map((item) => {
+      if (item.exerciseSnapshot.theme === oldName) {
+        sessionChanged = true;
+        return {
+          ...item,
+          exerciseSnapshot: {
+            ...item.exerciseSnapshot,
+            theme: trimmed,
+          },
+        };
+      }
+      return item;
+    });
+
+    if (sessionChanged) {
+      sessUpdated = true;
+      return { ...sess, theme: sTheme, items: updatedItems };
+    }
+    return sess;
+  });
+  if (sessUpdated) {
+    safeSetItem(STORAGE_KEYS.SESSIONS, JSON.stringify(updatedSessions));
+  }
+
+  return true;
+}
+
+// Delete Category
+export function deleteCategory(name: string): boolean {
+  const current = getTaxonomies();
+  if (current.categories.length <= 1) return false; // Keep at least one
+  current.categories = current.categories.filter((c) => c !== name);
+  saveTaxonomies(current);
+  return true;
+}
+
+// Add a new Age Group
+export function addAgeGroup(name: string): boolean {
+  const trimmed = name.trim();
+  if (!trimmed) return false;
+  const current = getTaxonomies();
+  if (current.ageGroups.some((a) => a.toLowerCase() === trimmed.toLowerCase())) {
+    return false;
+  }
+  current.ageGroups.push(trimmed);
+  saveTaxonomies(current);
+  return true;
+}
+
+// Update / Rename Age Group (and cascade to exercises and sessions)
+export function updateAgeGroup(oldName: string, newName: string): boolean {
+  const trimmed = newName.trim();
+  if (!trimmed || oldName === trimmed) return false;
+  const current = getTaxonomies();
+  const index = current.ageGroups.indexOf(oldName);
+  if (index === -1) return false;
+
+  current.ageGroups[index] = trimmed;
+  saveTaxonomies(current);
+
+  // Cascade to exercises
+  const exercises = getExercises();
+  let exUpdated = false;
+  const updatedExercises = exercises.map((ex) => {
+    if (ex.ageGroups.includes(oldName)) {
+      exUpdated = true;
+      return {
+        ...ex,
+        ageGroups: ex.ageGroups.map((ag) => (ag === oldName ? trimmed : ag)),
+      };
+    }
+    return ex;
+  });
+  if (exUpdated) {
+    safeSetItem(STORAGE_KEYS.EXERCISES, JSON.stringify(updatedExercises));
+  }
+
+  // Cascade to sessions
+  const sessions = getSessions();
+  let sessUpdated = false;
+  const updatedSessions = sessions.map((sess) => {
+    if (sess.ageGroup === oldName) {
+      sessUpdated = true;
+      return { ...sess, ageGroup: trimmed };
+    }
+    return sess;
+  });
+  if (sessUpdated) {
+    safeSetItem(STORAGE_KEYS.SESSIONS, JSON.stringify(updatedSessions));
+  }
+
+  return true;
+}
+
+// Delete Age Group
+export function deleteAgeGroup(name: string): boolean {
+  const current = getTaxonomies();
+  if (current.ageGroups.length <= 1) return false; // Keep at least one
+  current.ageGroups = current.ageGroups.filter((a) => a !== name);
+  saveTaxonomies(current);
+  return true;
 }
 
 /* ==================== EXERCISES ==================== */

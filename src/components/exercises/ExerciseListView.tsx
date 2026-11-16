@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import type { Exercise, ExerciseCategory, AgeGroup } from "../../types/exercise";
+import type { Exercise } from "../../types/exercise";
 import {
   Plus,
   Search,
@@ -14,12 +14,13 @@ import { PitchDiagramView } from "../diagram/PitchDiagramView";
 
 interface ExerciseListViewProps {
   exercises: Exercise[];
+  categories?: string[];
+  ageGroups?: string[];
   onCreateExercise: () => void;
   onOpenExercise: (id: string) => void;
 }
 
-const CATEGORIES: ("All" | ExerciseCategory)[] = [
-  "All",
+const DEFAULT_CATEGORIES = [
   "Warm-up",
   "Passing & Receiving",
   "Possession",
@@ -29,8 +30,7 @@ const CATEGORIES: ("All" | ExerciseCategory)[] = [
   "Transition",
 ];
 
-const AGE_GROUPS: ("All" | AgeGroup)[] = [
-  "All",
+const DEFAULT_AGE_GROUPS = [
   "U7–U9",
   "U10–U12",
   "U13–U15",
@@ -40,12 +40,17 @@ const AGE_GROUPS: ("All" | AgeGroup)[] = [
 
 export function ExerciseListView({
   exercises,
+  categories = DEFAULT_CATEGORIES,
+  ageGroups = DEFAULT_AGE_GROUPS,
   onCreateExercise,
   onOpenExercise,
 }: ExerciseListViewProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<"All" | ExerciseCategory>("All");
-  const [selectedAge, setSelectedAge] = useState<"All" | AgeGroup>("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedAge, setSelectedAge] = useState<string>("All");
+
+  const categoryOptions = useMemo(() => ["All", ...categories], [categories]);
+  const ageOptions = useMemo(() => ["All", ...ageGroups], [ageGroups]);
 
   const filteredExercises = useMemo(() => {
     return exercises.filter((ex) => {
@@ -116,11 +121,11 @@ export function ExerciseListView({
           <select
             id="category-select"
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value as "All" | ExerciseCategory)}
+            onChange={(e) => setSelectedCategory(e.target.value)}
             aria-label="Filter by theme category"
             className="h-11 rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm font-medium text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
           >
-            {CATEGORIES.map((cat) => (
+            {categoryOptions.map((cat) => (
               <option key={cat} value={cat}>
                 {cat === "All" ? "All Categories" : cat}
               </option>
@@ -132,11 +137,11 @@ export function ExerciseListView({
           <select
             id="age-select"
             value={selectedAge}
-            onChange={(e) => setSelectedAge(e.target.value as "All" | AgeGroup)}
+            onChange={(e) => setSelectedAge(e.target.value)}
             aria-label="Filter by age group"
             className="h-11 rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm font-medium text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
           >
-            {AGE_GROUPS.map((age) => (
+            {ageOptions.map((age) => (
               <option key={age} value={age}>
                 {age === "All" ? "All Ages" : age}
               </option>
@@ -148,7 +153,7 @@ export function ExerciseListView({
       {/* Quick Category Filter Chips */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
         <Filter className="size-3.5 text-[var(--fc-text-muted)] mr-1 shrink-0" />
-        {CATEGORIES.map((cat) => (
+        {categoryOptions.map((cat) => (
           <button
             key={cat}
             type="button"

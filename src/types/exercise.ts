@@ -70,22 +70,9 @@ export interface DiagramDocument {
   objects: DiagramObject[];
 }
 
-export type ExerciseCategory =
-  | "Warm-up"
-  | "Passing & Receiving"
-  | "Possession"
-  | "Dribbling & 1v1"
-  | "Defending"
-  | "Shooting & Finishing"
-  | "Transition";
+export type ExerciseCategory = string;
 
-export type AgeGroup =
-  | "U7–U9"
-  | "U10–U12"
-  | "U13–U15"
-  | "U16–U19"
-  | "Senior"
-  | "All ages";
+export type AgeGroup = string;
 
 export interface Exercise {
   id: string;

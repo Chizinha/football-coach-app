@@ -2,6 +2,25 @@ import type { Exercise } from "../types/exercise";
 import type { TrainingSession } from "../types/session";
 import type { ClubPrinciplesData } from "../types/principles";
 
+export const DEFAULT_CATEGORIES: string[] = [
+  "Warm-up",
+  "Passing & Receiving",
+  "Possession",
+  "Dribbling & 1v1",
+  "Defending",
+  "Shooting & Finishing",
+  "Transition",
+];
+
+export const DEFAULT_AGE_GROUPS: string[] = [
+  "U7–U9",
+  "U10–U12",
+  "U13–U15",
+  "U16–U19",
+  "Senior",
+  "All ages",
+];
+
 export const SEED_EXERCISES: Exercise[] = [
   {
     id: "ex-1",

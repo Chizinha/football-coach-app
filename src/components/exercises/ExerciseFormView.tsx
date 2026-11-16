@@ -1,8 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type {
   Exercise,
-  ExerciseCategory,
-  AgeGroup,
   DiagramDocument,
   Visibility,
 } from "../../types/exercise";
@@ -15,13 +13,7 @@ import {
 } from "lucide-react";
 import { PitchDiagramEditor } from "../diagram/PitchDiagramEditor";
 
-interface ExerciseFormViewProps {
-  initialExercise?: Exercise | null;
-  onSave: (exercise: Exercise) => void;
-  onCancel: () => void;
-}
-
-const CATEGORIES: ExerciseCategory[] = [
+const DEFAULT_CATEGORIES: string[] = [
   "Warm-up",
   "Passing & Receiving",
   "Possession",
@@ -31,7 +23,7 @@ const CATEGORIES: ExerciseCategory[] = [
   "Transition",
 ];
 
-const AGE_OPTIONS: AgeGroup[] = [
+const DEFAULT_AGE_OPTIONS: string[] = [
   "U7–U9",
   "U10–U12",
   "U13–U15",
@@ -40,8 +32,18 @@ const AGE_OPTIONS: AgeGroup[] = [
   "All ages",
 ];
 
+interface ExerciseFormViewProps {
+  initialExercise?: Exercise | null;
+  categories?: string[];
+  ageGroupOptions?: string[];
+  onSave: (exercise: Exercise) => void;
+  onCancel: () => void;
+}
+
 export function ExerciseFormView({
   initialExercise,
+  categories = DEFAULT_CATEGORIES,
+  ageGroupOptions = DEFAULT_AGE_OPTIONS,
   onSave,
   onCancel,
 }: ExerciseFormViewProps) {
@@ -50,8 +52,8 @@ export function ExerciseFormView({
   // Form States
   const [title, setTitle] = useState(initialExercise?.title || "");
   const [description, setDescription] = useState(initialExercise?.description || "");
-  const [theme, setTheme] = useState<ExerciseCategory>(initialExercise?.theme || "Passing & Receiving");
-  const [ageGroups, setAgeGroups] = useState<AgeGroup[]>(initialExercise?.ageGroups || ["U13–U15"]);
+  const [theme, setTheme] = useState(initialExercise?.theme || "Passing & Receiving");
+  const [selectedAgeGroups, setSelectedAgeGroups] = useState<string[]>(initialExercise?.ageGroups || ["U13–U15"]);
   const [durationMinutes, setDurationMinutes] = useState(initialExercise?.durationMinutes || 15);
   const [playerMin, setPlayerMin] = useState(initialExercise?.playerCount?.min || 8);
   const [playerMax, setPlayerMax] = useState(initialExercise?.playerCount?.max || 12);
@@ -167,7 +169,7 @@ export function ExerciseFormView({
       title: title.trim(),
       description: description.trim() || "Football coaching exercise",
       theme,
-      ageGroups: ageGroups.length > 0 ? ageGroups : ["All ages"],
+      ageGroups: selectedAgeGroups.length > 0 ? selectedAgeGroups : ["All ages"],
       durationMinutes: Number(durationMinutes) || 15,
       playerCount: {
         min: Number(playerMin) || 6,
@@ -277,10 +279,10 @@ export function ExerciseFormView({
               <select
                 id="ex-theme"
                 value={theme}
-                onChange={(e) => setTheme(e.target.value as ExerciseCategory)}
+                onChange={(e) => setTheme(e.target.value)}
                 className="mt-1.5 h-11 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
               >
-                {CATEGORIES.map((cat) => (
+                {categories.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
                   </option>
@@ -312,11 +314,11 @@ export function ExerciseFormView({
               </label>
               <select
                 id="ex-age"
-                value={ageGroups[0] || "U13–U15"}
-                onChange={(e) => setAgeGroups([e.target.value as AgeGroup])}
+                value={selectedAgeGroups[0] || "U13–U15"}
+                onChange={(e) => setSelectedAgeGroups([e.target.value])}
                 className="mt-1.5 h-11 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
               >
-                {AGE_OPTIONS.map((age) => (
+                {ageGroupOptions.map((age) => (
                   <option key={age} value={age}>
                     {age}
                   </option>
