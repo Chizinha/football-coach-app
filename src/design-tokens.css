@@ -1,0 +1,145 @@
+/*
+ * Football Coach design tokens — v0.1
+ * Import from src/index.css after Tailwind/shadcn imports.
+ * Light theme only in this prototype. Dark mode is intentionally out of scope.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Brand palette */
+  --fc-forest: #174d32;
+  --fc-green: #267a43;
+  --fc-natural-green: #59a66b;
+  --fc-pale-green: #e8f2ea;
+
+  /* Surfaces and text */
+  --fc-app-bg: #f7f9f7;
+  --fc-white: #ffffff;
+  --fc-text: #202821;
+  --fc-text-muted: #5b665e;
+  --fc-text-disabled: #737d75;
+
+  /* Borders */
+  --fc-border: #dde3de;
+  --fc-border-strong: #6f8374;
+
+  /* Semantic colours */
+  --fc-success: #174d32;
+  --fc-success-bg: #e8f2ea;
+  --fc-error: #b42318;
+  --fc-error-bg: #fef3f2;
+  --fc-warning: #8a4b08;
+  --fc-warning-bg: #fff7ed;
+  --fc-info: #1d4ed8;
+  --fc-info-bg: #eff6ff;
+
+  /* Focus */
+  --fc-focus: #174d32;
+  --fc-focus-width: 3px;
+  --fc-focus-offset: 2px;
+
+  /* Typography */
+  --fc-font-sans: "Manrope Variable", Manrope, ui-sans-serif, system-ui, sans-serif;
+  --fc-font-size-xs: 0.8125rem;
+  --fc-font-size-sm: 0.875rem;
+  --fc-font-size-md: 1rem;
+  --fc-font-size-lg: 1.125rem;
+  --fc-font-size-xl: 1.5rem;
+  --fc-font-size-2xl: 2rem;
+  --fc-line-body: 1.5;
+  --fc-line-heading: 1.2;
+
+  /* Spacing: 4px base */
+  --fc-space-1: 0.25rem;
+  --fc-space-2: 0.5rem;
+  --fc-space-3: 0.75rem;
+  --fc-space-4: 1rem;
+  --fc-space-6: 1.5rem;
+  --fc-space-8: 2rem;
+  --fc-space-12: 3rem;
+
+  /* Radius */
+  --fc-radius-sm: 6px;
+  --fc-radius-control: 8px;
+  --fc-radius-card: 10px;
+  --fc-radius-overlay: 12px;
+  --fc-radius-pill: 999px;
+
+  /* Elevation */
+  --fc-shadow-card: 0 1px 2px rgb(32 40 33 / 5%);
+  --fc-shadow-overlay: 0 12px 32px rgb(32 40 33 / 14%);
+
+  /* Interaction sizing */
+  --fc-control-height: 44px;
+  --fc-icon-target: 44px;
+  --fc-target-minimum: 24px;
+
+  /* Layout */
+  --fc-sidebar-width: 248px;
+  --fc-content-max: 1440px;
+
+  /* Tactical diagram palette */
+  --fc-team-a: #1d4ed8;
+  --fc-team-b: #b42318;
+  --fc-team-neutral: #202821;
+  --fc-cone: #a34a00;
+  --fc-pitch: #e8f2ea;
+  --fc-pitch-line: #6f8374;
+  --fc-movement: #174d32;
+  --fc-pass: #1d4ed8;
+
+  /* shadcn semantic variables */
+  --background: var(--fc-app-bg);
+  --foreground: var(--fc-text);
+  --card: var(--fc-white);
+  --card-foreground: var(--fc-text);
+  --popover: var(--fc-white);
+  --popover-foreground: var(--fc-text);
+  --primary: var(--fc-green);
+  --primary-foreground: var(--fc-white);
+  --secondary: var(--fc-pale-green);
+  --secondary-foreground: var(--fc-forest);
+  --muted: #f0f3f0;
+  --muted-foreground: var(--fc-text-muted);
+  --accent: var(--fc-pale-green);
+  --accent-foreground: var(--fc-forest);
+  --destructive: var(--fc-error);
+  --destructive-foreground: var(--fc-white);
+  --border: var(--fc-border);
+  --input: var(--fc-border-strong);
+  --ring: var(--fc-focus);
+  --radius: 0.625rem;
+
+  --chart-1: var(--fc-green);
+  --chart-2: var(--fc-forest);
+  --chart-3: var(--fc-team-a);
+  --chart-4: var(--fc-team-b);
+  --chart-5: var(--fc-cone);
+
+  --sidebar: var(--fc-white);
+  --sidebar-foreground: var(--fc-text);
+  --sidebar-primary: var(--fc-green);
+  --sidebar-primary-foreground: var(--fc-white);
+  --sidebar-accent: var(--fc-pale-green);
+  --sidebar-accent-foreground: var(--fc-forest);
+  --sidebar-border: var(--fc-border);
+  --sidebar-ring: var(--fc-focus);
+}
+
+/* Shared accessibility primitives. */
+:where(button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: var(--fc-focus-width) solid var(--fc-focus);
+  outline-offset: var(--fc-focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
