@@ -222,17 +222,17 @@ export function AdminSettingsView({
                             type="button"
                             onClick={() => handleSaveCatEdit(cat)}
                             aria-label="Save category name"
-                            className="p-1.5 rounded bg-[var(--fc-green)] text-white hover:bg-[var(--fc-forest)]"
+                            className="p-1.5 rounded bg-[var(--fc-green)] text-white hover:bg-[var(--fc-forest)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                           >
-                            <Check className="size-3.5" />
+                            <Check className="size-3.5" aria-hidden="true" />
                           </button>
                           <button
                             type="button"
                             onClick={() => setEditingCatOldName(null)}
                             aria-label="Cancel editing"
-                            className="p-1.5 rounded border border-[var(--fc-border)] bg-white text-[var(--fc-text-muted)] hover:bg-[#f0f3f0]"
+                            className="p-1.5 rounded border border-[var(--fc-border)] bg-white text-[var(--fc-text-muted)] hover:bg-[#f0f3f0] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                           >
-                            <X className="size-3.5" />
+                            <X className="size-3.5" aria-hidden="true" />
                           </button>
                         </div>
                       ) : (
@@ -370,17 +370,17 @@ export function AdminSettingsView({
                             type="button"
                             onClick={() => handleSaveAgeEdit(age)}
                             aria-label="Save age group name"
-                            className="p-1.5 rounded bg-[var(--fc-green)] text-white hover:bg-[var(--fc-forest)]"
+                            className="p-1.5 rounded bg-[var(--fc-green)] text-white hover:bg-[var(--fc-forest)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                           >
-                            <Check className="size-3.5" />
+                            <Check className="size-3.5" aria-hidden="true" />
                           </button>
                           <button
                             type="button"
                             onClick={() => setEditingAgeOldName(null)}
                             aria-label="Cancel editing"
-                            className="p-1.5 rounded border border-[var(--fc-border)] bg-white text-[var(--fc-text-muted)] hover:bg-[#f0f3f0]"
+                            className="p-1.5 rounded border border-[var(--fc-border)] bg-white text-[var(--fc-text-muted)] hover:bg-[#f0f3f0] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                           >
-                            <X className="size-3.5" />
+                            <X className="size-3.5" aria-hidden="true" />
                           </button>
                         </div>
                       ) : (

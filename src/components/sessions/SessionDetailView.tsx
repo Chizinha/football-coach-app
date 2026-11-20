@@ -168,17 +168,11 @@ export function SessionDetailView({
               className="rounded-xl border border-[var(--fc-border)] bg-white shadow-xs overflow-hidden transition-all"
             >
               {/* Timeline Header Row */}
-              <div
+              <button
+                type="button"
                 onClick={() => toggleExpand(item.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    toggleExpand(item.id);
-                  }
-                }}
-                className="flex items-center justify-between p-5 cursor-pointer hover:bg-[#f7f9f7] transition select-none focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
+                aria-expanded={isExpanded}
+                className="flex w-full text-left items-center justify-between p-5 cursor-pointer hover:bg-[#f7f9f7] transition select-none focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
               >
                 <div className="flex items-center gap-3.5">
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[var(--fc-forest)] text-xs font-bold text-white shadow-xs">
@@ -206,12 +200,12 @@ export function SessionDetailView({
                     {item.plannedDurationMinutes} mins
                   </span>
                   {isExpanded ? (
-                    <ChevronUp className="size-5 text-[var(--fc-text-muted)]" />
+                    <ChevronUp className="size-5 text-[var(--fc-text-muted)]" aria-hidden="true" />
                   ) : (
-                    <ChevronDown className="size-5 text-[var(--fc-text-muted)]" />
+                    <ChevronDown className="size-5 text-[var(--fc-text-muted)]" aria-hidden="true" />
                   )}
                 </div>
-              </div>
+              </button>
 
               {/* Expanded Exercise Content & Diagram */}
               {isExpanded && (

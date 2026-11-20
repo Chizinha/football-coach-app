@@ -310,7 +310,7 @@ export function SessionBuilderView({
                   id="sess-theme"
                   value={theme}
                   onChange={(e) => setTheme(e.target.value)}
-                  className="mt-1 h-10 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)]"
+                  className="mt-1 h-10 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 >
                   {allCategories.map((cat) => (
                     <option key={cat} value={cat}>
@@ -328,7 +328,7 @@ export function SessionBuilderView({
                   id="sess-age"
                   value={ageGroup}
                   onChange={(e) => setAgeGroup(e.target.value)}
-                  className="mt-1 h-10 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)]"
+                  className="mt-1 h-10 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 >
                   {allAgeGroups.map((ag) => (
                     <option key={ag} value={ag}>
@@ -346,7 +346,7 @@ export function SessionBuilderView({
                   id="sess-vis"
                   value={visibility}
                   onChange={(e) => setVisibility(e.target.value as Visibility)}
-                  className="mt-1 h-10 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)]"
+                  className="mt-1 h-10 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 >
                   <option value="private">Private (Only you)</option>
                   <option value="club">Shared with club</option>
@@ -446,7 +446,8 @@ export function SessionBuilderView({
                           max="90"
                           value={item.plannedDurationMinutes}
                           onChange={(e) => handleDurationChange(idx, Number(e.target.value))}
-                          className="mt-1 h-8 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 text-xs text-[var(--fc-text)]"
+                          aria-label={`Duration in minutes for ${item.exerciseSnapshot.title}`}
+                          className="mt-1 h-8 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                         />
                       </div>
                       <div className="sm:col-span-3">
@@ -459,7 +460,8 @@ export function SessionBuilderView({
                           value={item.sessionNotes || ""}
                           onChange={(e) => handleNotesChange(idx, e.target.value)}
                           placeholder="e.g. Enforce 2-touch limit, highlight 3rd man movement..."
-                          className="mt-1 h-8 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)]"
+                          aria-label={`Session notes for ${item.exerciseSnapshot.title}`}
+                          className="mt-1 h-8 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2.5 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                         />
                       </div>
                     </div>
@@ -528,7 +530,7 @@ export function SessionBuilderView({
                     id="lib-cat-filter"
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="h-9 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2 text-xs text-[var(--fc-text)]"
+                    className="h-9 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   >
                     <option value="All">All Categories</option>
                     {allCategories.map((c) => (
@@ -542,7 +544,7 @@ export function SessionBuilderView({
                     id="lib-age-filter"
                     value={selectedAge}
                     onChange={(e) => setSelectedAge(e.target.value)}
-                    className="h-9 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2 text-xs text-[var(--fc-text)]"
+                    className="h-9 w-full rounded-lg border border-[var(--fc-border-strong)] bg-white px-2 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   >
                     <option value="All">All Ages</option>
                     {allAgeGroups.map((a) => (
@@ -557,7 +559,7 @@ export function SessionBuilderView({
                 <button
                   type="button"
                   onClick={() => setSelectedCategory("All")}
-                  className={`rounded-full px-2.5 py-0.5 font-semibold whitespace-nowrap transition ${
+                  className={`rounded-full px-2.5 py-0.5 font-semibold whitespace-nowrap transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] ${
                     selectedCategory === "All"
                       ? "bg-[var(--fc-forest)] text-white"
                       : "bg-[#f0f3f0] text-[var(--fc-text-muted)] hover:bg-[#e4eae4]"
@@ -570,7 +572,7 @@ export function SessionBuilderView({
                     key={cat}
                     type="button"
                     onClick={() => setSelectedCategory(cat)}
-                    className={`rounded-full px-2.5 py-0.5 font-semibold whitespace-nowrap transition ${
+                    className={`rounded-full px-2.5 py-0.5 font-semibold whitespace-nowrap transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] ${
                       selectedCategory === cat
                         ? "bg-[var(--fc-forest)] text-white"
                         : "bg-[#f0f3f0] text-[var(--fc-text-muted)] hover:bg-[#e4eae4]"

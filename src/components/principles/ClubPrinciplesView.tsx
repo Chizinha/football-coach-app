@@ -142,6 +142,7 @@ export function ClubPrinciplesView({ principles, onSave }: ClubPrinciplesViewPro
                         rows={2}
                         value={para}
                         onChange={(e) => handleSectionTextChange(secIdx, pIdx, e.target.value)}
+                        aria-label={`Paragraph ${pIdx + 1}`}
                         className="flex-1 rounded-lg border border-[var(--fc-border-strong)] p-2.5 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                       />
                       {section.content.length > 1 && (
@@ -149,9 +150,9 @@ export function ClubPrinciplesView({ principles, onSave }: ClubPrinciplesViewPro
                           type="button"
                           onClick={() => handleRemoveParagraph(secIdx, pIdx)}
                           aria-label="Remove paragraph"
-                          className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318]"
+                          className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
                         >
-                          <Trash2 className="size-4" />
+                          <Trash2 className="size-4" aria-hidden="true" />
                         </button>
                       )}
                     </div>
@@ -167,9 +168,9 @@ export function ClubPrinciplesView({ principles, onSave }: ClubPrinciplesViewPro
                 <button
                   type="button"
                   onClick={() => handleAddParagraph(secIdx)}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--fc-green)] hover:text-[var(--fc-forest)]"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--fc-green)] hover:text-[var(--fc-forest)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
                 >
-                  <Plus className="size-3.5" />
+                  <Plus className="size-3.5" aria-hidden="true" />
                   <span>Add paragraph</span>
                 </button>
               )}
@@ -180,15 +181,16 @@ export function ClubPrinciplesView({ principles, onSave }: ClubPrinciplesViewPro
               <div className="rounded-xl border border-[var(--fc-border)] bg-[var(--fc-pale-green)]/40 p-4">
                 {isEditing ? (
                   <div>
-                    <label className="block text-xs font-bold text-[var(--fc-forest)] mb-1">
+                    <label htmlFor={`callout-${secIdx}`} className="block text-xs font-bold text-[var(--fc-forest)] mb-1">
                       Callout Rule:
                     </label>
                     <input
+                      id={`callout-${secIdx}`}
                       type="text"
                       value={section.callout || ""}
                       onChange={(e) => handleCalloutChange(secIdx, e.target.value)}
                       placeholder="e.g. Core club rule..."
-                      className="w-full rounded-md border border-[var(--fc-border-strong)] bg-white px-3 py-1.5 text-xs text-[var(--fc-text)]"
+                      className="w-full rounded-md border border-[var(--fc-border-strong)] bg-white px-3 py-1.5 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                     />
                   </div>
                 ) : (

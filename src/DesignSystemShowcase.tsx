@@ -335,7 +335,7 @@ export default function DesignSystemShowcase() {
             <div className="ds-two-column">
               <article className="ds-content-card">
                 <div className="ds-card-art" aria-hidden="true">
-                  <svg viewBox="0 0 340 150" role="presentation">
+                  <svg viewBox="0 0 340 150" role="presentation" aria-hidden="true">
                     <rect x="1" y="1" width="338" height="148" rx="8" fill="#E8F2EA" />
                     <rect x="18" y="16" width="304" height="118" rx="2" fill="none" stroke="#6F8374" strokeWidth="1.5" />
                     <path d="M170 16 V134 M170 53 A24 24 0 1 0 170 101 A24 24 0 1 0 170 53" fill="none" stroke="#6F8374" strokeWidth="1.3" />

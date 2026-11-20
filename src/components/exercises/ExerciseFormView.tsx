@@ -353,7 +353,7 @@ export function ExerciseFormView({
                   max="40"
                   value={playerMin}
                   onChange={(e) => setPlayerMin(Number(e.target.value))}
-                  className="mt-1.5 h-11 w-full rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)]"
+                  className="mt-1.5 h-11 w-full rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 />
               </div>
               <div>
@@ -367,7 +367,7 @@ export function ExerciseFormView({
                   max="40"
                   value={playerMax}
                   onChange={(e) => setPlayerMax(Number(e.target.value))}
-                  className="mt-1.5 h-11 w-full rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)]"
+                  className="mt-1.5 h-11 w-full rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 />
               </div>
             </div>
@@ -495,6 +495,7 @@ export function ExerciseFormView({
                     value={step}
                     onChange={(e) => handleInstructionChange(idx, e.target.value)}
                     placeholder={`Step ${idx + 1} details...`}
+                    aria-label={`Instruction step ${idx + 1}`}
                     className="h-10 flex-1 rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   />
                   {instructions.length > 1 && (
@@ -502,9 +503,9 @@ export function ExerciseFormView({
                       type="button"
                       onClick={() => handleRemoveInstruction(idx)}
                       aria-label={`Remove step ${idx + 1}`}
-                      className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318]"
+                      className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
                     >
-                      <Trash2 className="size-4" />
+                      <Trash2 className="size-4" aria-hidden="true" />
                     </button>
                   )}
                 </div>
@@ -524,9 +525,9 @@ export function ExerciseFormView({
               <button
                 type="button"
                 onClick={handleAddCoachingPoint}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--fc-green)] hover:text-[var(--fc-forest)]"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--fc-green)] hover:text-[var(--fc-forest)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
               >
-                <Plus className="size-3.5" />
+                <Plus className="size-3.5" aria-hidden="true" />
                 <span>Add coaching point</span>
               </button>
             </div>
@@ -540,16 +541,17 @@ export function ExerciseFormView({
                     value={point}
                     onChange={(e) => handleCoachingPointChange(idx, e.target.value)}
                     placeholder="e.g. Open body shape to receive across the body..."
+                    aria-label={`Coaching point ${idx + 1}`}
                     className="h-10 flex-1 rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   />
                   {coachingPoints.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleRemoveCoachingPoint(idx)}
-                      aria-label="Remove coaching point"
-                      className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318]"
+                      aria-label={`Remove coaching point ${idx + 1}`}
+                      className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
                     >
-                      <Trash2 className="size-4" />
+                      <Trash2 className="size-4" aria-hidden="true" />
                     </button>
                   )}
                 </div>
@@ -566,9 +568,9 @@ export function ExerciseFormView({
               <button
                 type="button"
                 onClick={handleAddProgression}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--fc-green)] hover:text-[var(--fc-forest)]"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--fc-green)] hover:text-[var(--fc-forest)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
               >
-                <Plus className="size-3.5" />
+                <Plus className="size-3.5" aria-hidden="true" />
                 <span>Add progression</span>
               </button>
             </div>
@@ -582,15 +584,16 @@ export function ExerciseFormView({
                     value={prog}
                     onChange={(e) => handleProgressionChange(idx, e.target.value)}
                     placeholder="e.g. Limit attackers to 1-touch or add a recovery defender..."
+                    aria-label={`Progression ${idx + 1}`}
                     className="h-10 flex-1 rounded-lg border border-[var(--fc-border-strong)] px-3 text-sm text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   />
                   <button
                     type="button"
                     onClick={() => handleRemoveProgression(idx)}
-                    aria-label="Remove progression"
-                    className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318]"
+                    aria-label={`Remove progression ${idx + 1}`}
+                    className="p-2 text-[var(--fc-text-muted)] hover:text-[#b42318] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
                   >
-                    <Trash2 className="size-4" />
+                    <Trash2 className="size-4" aria-hidden="true" />
                   </button>
                 </div>
               ))}

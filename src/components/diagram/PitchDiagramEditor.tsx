@@ -208,7 +208,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
               key={pType}
               type="button"
               onClick={() => handlePitchTypeChange(pType)}
-              className={`rounded px-2.5 py-1 text-xs font-semibold capitalize transition ${
+              className={`rounded px-2.5 py-1 text-xs font-semibold capitalize transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] ${
                 currentDiagram.pitchType === pType
                   ? "bg-white text-[var(--fc-forest)] shadow-xs"
                   : "text-[var(--fc-text-muted)] hover:text-[var(--fc-text)]"
@@ -493,9 +493,9 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
               <button
                 type="button"
                 onClick={handleDeleteSelected}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-[#b42318] hover:underline"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#b42318] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
               >
-                <Trash2 className="size-3.5" />
+                <Trash2 className="size-3.5" aria-hidden="true" />
                 <span>Delete selected</span>
               </button>
             )}
@@ -591,7 +591,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                     step="10"
                     value={selectedObject.type === "arrow" ? selectedObject.startX : selectedObject.x}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => handleCoordinateChange("x", parseInt(e.target.value, 10))}
-                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs text-[var(--fc-text)]"
+                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   />
                 </div>
                 <div>
@@ -606,7 +606,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                     step="10"
                     value={selectedObject.type === "arrow" ? selectedObject.startY : selectedObject.y}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => handleCoordinateChange("y", parseInt(e.target.value, 10))}
-                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs text-[var(--fc-text)]"
+                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   />
                 </div>
               </div>
@@ -625,9 +625,9 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
             <button
               type="button"
               onClick={handleClearCanvas}
-              className="inline-flex items-center gap-1 text-xs font-medium text-[var(--fc-text-muted)] hover:text-[#b42318]"
+              className="inline-flex items-center gap-1 text-xs font-medium text-[var(--fc-text-muted)] hover:text-[#b42318] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] rounded"
             >
-              <RotateCcw className="size-3" />
+              <RotateCcw className="size-3" aria-hidden="true" />
               <span>Clear pitch</span>
             </button>
           </div>
@@ -650,7 +650,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                       );
                       onChange({ ...currentDiagram, objects: updated });
                     }}
-                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs"
+                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   >
                     <option value="teamA">Team A (Blue)</option>
                     <option value="teamB">Team B (Red)</option>
@@ -672,7 +672,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                       );
                       onChange({ ...currentDiagram, objects: updated });
                     }}
-                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs"
+                    className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                   />
                 </div>
               </div>
@@ -690,7 +690,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                     );
                     onChange({ ...currentDiagram, objects: updated });
                   }}
-                  className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs"
+                  className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 />
               </div>
             </div>
@@ -711,7 +711,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                     );
                     onChange({ ...currentDiagram, objects: updated });
                   }}
-                  className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs"
+                  className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 >
                   <option value="pass">Pass (Dashed Blue)</option>
                   <option value="run">Player Run (Solid Forest Green)</option>
@@ -732,7 +732,7 @@ export function PitchDiagramEditor({ diagram = DEFAULT_DIAGRAM, onChange }: Pitc
                     );
                     onChange({ ...currentDiagram, objects: updated });
                   }}
-                  className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs"
+                  className="mt-1 w-full rounded border border-[var(--fc-border-strong)] bg-white px-2 py-1 text-xs focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 />
               </div>
             </div>

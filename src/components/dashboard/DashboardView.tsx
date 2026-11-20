@@ -146,18 +146,11 @@ export function DashboardView({
 
           <div className="mt-4 space-y-3">
             {recentExercises.map((ex) => (
-              <div
+              <button
                 key={ex.id}
+                type="button"
                 onClick={() => onOpenExercise(ex.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onOpenExercise(ex.id);
-                  }
-                }}
-                className="group flex cursor-pointer items-start justify-between rounded-lg border border-[var(--fc-border)] p-4 hover:border-[#6f8374] hover:bg-[#f7f9f7] transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
+                className="group flex w-full text-left cursor-pointer items-start justify-between rounded-lg border border-[var(--fc-border)] p-4 hover:border-[#6f8374] hover:bg-[#f7f9f7] transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
@@ -175,22 +168,22 @@ export function DashboardView({
                     <span className="font-medium text-[var(--fc-forest)]">{ex.theme}</span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
-                      <Clock className="size-3" />
+                      <Clock className="size-3" aria-hidden="true" />
                       {ex.durationMinutes}m
                     </span>
                     {ex.playerCount && (
                       <>
                         <span>•</span>
                         <span className="flex items-center gap-1">
-                          <Users className="size-3" />
+                          <Users className="size-3" aria-hidden="true" />
                           {ex.playerCount.min}–{ex.playerCount.max}
                         </span>
                       </>
                     )}
                   </div>
                 </div>
-                <ArrowRight className="size-4 text-[var(--fc-text-muted)] group-hover:text-[var(--fc-forest)] transition-transform group-hover:translate-x-0.5 mt-1" />
-              </div>
+                <ArrowRight className="size-4 text-[var(--fc-text-muted)] group-hover:text-[var(--fc-forest)] transition-transform group-hover:translate-x-0.5 mt-1" aria-hidden="true" />
+              </button>
             ))}
           </div>
         </div>
@@ -216,18 +209,11 @@ export function DashboardView({
                 0
               );
               return (
-                <div
+                <button
                   key={sess.id}
+                  type="button"
                   onClick={() => onOpenSession(sess.id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      onOpenSession(sess.id);
-                    }
-                  }}
-                  className="group flex cursor-pointer items-start justify-between rounded-lg border border-[var(--fc-border)] p-4 hover:border-[#6f8374] hover:bg-[#f7f9f7] transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
+                  className="group flex w-full text-left cursor-pointer items-start justify-between rounded-lg border border-[var(--fc-border)] p-4 hover:border-[#6f8374] hover:bg-[#f7f9f7] transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -245,15 +231,15 @@ export function DashboardView({
                       <span className="font-medium text-[var(--fc-forest)]">{sess.ageGroup}</span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
-                        <Clock className="size-3" />
+                        <Clock className="size-3" aria-hidden="true" />
                         {totalMinutes} mins total
                       </span>
                       <span>•</span>
                       <span>{sess.items.length} exercises</span>
                     </div>
                   </div>
-                  <ArrowRight className="size-4 text-[var(--fc-text-muted)] group-hover:text-[var(--fc-forest)] transition-transform group-hover:translate-x-0.5 mt-1" />
-                </div>
+                  <ArrowRight className="size-4 text-[var(--fc-text-muted)] group-hover:text-[var(--fc-forest)] transition-transform group-hover:translate-x-0.5 mt-1" aria-hidden="true" />
+                </button>
               );
             })}
           </div>
