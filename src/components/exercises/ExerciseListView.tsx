@@ -103,8 +103,8 @@ export function ExerciseListView({
       {/* Filter and Search Bar */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
         {/* Search Input */}
-        <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[var(--fc-text-muted)]" />
+        <div className="relative flex-1 min-w-0">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[var(--fc-text-muted)]" aria-hidden="true" />
           <input
             type="search"
             value={searchQuery}
@@ -115,15 +115,15 @@ export function ExerciseListView({
           />
         </div>
 
-        {/* Category Select */}
-        <div className="flex items-center gap-2">
+        {/* Category & Age Group Selects */}
+        <div className="grid grid-cols-2 md:flex items-center gap-2 w-full md:w-auto shrink-0">
           <label htmlFor="category-select" className="sr-only">Filter by Category</label>
           <select
             id="category-select"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             aria-label="Filter by theme category"
-            className="h-11 rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm font-medium text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
+            className="h-11 w-full md:w-auto rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm font-medium text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
           >
             {categoryOptions.map((cat) => (
               <option key={cat} value={cat}>
@@ -139,7 +139,7 @@ export function ExerciseListView({
             value={selectedAge}
             onChange={(e) => setSelectedAge(e.target.value)}
             aria-label="Filter by age group"
-            className="h-11 rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm font-medium text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
+            className="h-11 w-full md:w-auto rounded-lg border border-[var(--fc-border-strong)] bg-white px-3 text-sm font-medium text-[var(--fc-text)] focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
           >
             {ageOptions.map((age) => (
               <option key={age} value={age}>
@@ -151,14 +151,14 @@ export function ExerciseListView({
       </div>
 
       {/* Quick Category Filter Chips */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-        <Filter className="size-3.5 text-[var(--fc-text-muted)] mr-1 shrink-0" />
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none">
+        <Filter className="size-3.5 text-[var(--fc-text-muted)] mr-1 shrink-0" aria-hidden="true" />
         {categoryOptions.map((cat) => (
           <button
             key={cat}
             type="button"
             onClick={() => setSelectedCategory(cat)}
-            className={`rounded-full px-3 py-1 font-semibold whitespace-nowrap transition ${
+            className={`rounded-full px-3 py-1 font-semibold whitespace-nowrap transition focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] ${
               selectedCategory === cat
                 ? "bg-[var(--fc-forest)] text-white shadow-xs"
                 : "bg-white text-[var(--fc-text-muted)] border border-[var(--fc-border)] hover:bg-[#f0f3f0]"
@@ -171,15 +171,15 @@ export function ExerciseListView({
 
       {/* Exercise Card Grid */}
       {filteredExercises.length > 0 ? (
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 items-stretch">
           {filteredExercises.map((exercise) => (
             <button
               key={exercise.id}
               type="button"
               onClick={() => onOpenExercise(exercise.id)}
-              className="group flex flex-col justify-between rounded-xl border border-[var(--fc-border)] bg-white p-5 text-left shadow-xs transition hover:border-[#6f8374] hover:shadow-md focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)]"
+              className="group flex flex-col justify-between rounded-xl border border-[var(--fc-border)] bg-white p-5 text-left shadow-xs transition hover:border-[#6f8374] hover:shadow-md focus-visible:outline-2 focus-visible:outline-[var(--fc-forest)] h-full"
             >
-              <div>
+              <div className="flex-1 flex flex-col">
                 {/* Header: Theme & Visibility */}
                 <div className="flex items-center justify-between gap-2 mb-2.5">
                   <span className="text-xs font-bold uppercase tracking-wider text-[var(--fc-forest)]">
@@ -196,37 +196,41 @@ export function ExerciseListView({
                 </h2>
 
                 {/* Objective Description */}
-                <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--fc-text-muted)]">
+                <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--fc-text-muted)] flex-1">
                   {exercise.description}
                 </p>
 
                 {/* Tactical Diagram Thumbnail Preview if available */}
                 {exercise.diagram && exercise.diagram.objects.length > 0 && (
-                  <div className="mt-3.5 overflow-hidden rounded-lg border border-[var(--fc-border)] bg-[#e8f2ea]/60">
-                    <PitchDiagramView diagram={exercise.diagram} title={exercise.title} className="max-h-32" />
+                  <div className="mt-3.5 w-full aspect-[16/10] overflow-hidden rounded-lg border border-[var(--fc-border)] bg-[#e8f2ea]/60 flex items-center justify-center">
+                    <PitchDiagramView
+                      diagram={exercise.diagram}
+                      title={exercise.title}
+                      className="w-full h-full border-0 shadow-none rounded-none"
+                    />
                   </div>
                 )}
               </div>
 
               {/* Card Footer: Metadata and Action */}
-              <div className="mt-4 pt-3 border-t border-[var(--fc-border)] flex items-center justify-between text-xs text-[var(--fc-text-muted)]">
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1 font-medium">
-                    <Clock className="size-3.5" />
+              <div className="mt-4 pt-3 border-t border-[var(--fc-border)] flex items-center justify-between gap-2 text-xs text-[var(--fc-text-muted)]">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 min-w-0">
+                  <span className="flex items-center gap-1 font-medium whitespace-nowrap">
+                    <Clock className="size-3.5" aria-hidden="true" />
                     {exercise.durationMinutes}m
                   </span>
                   {exercise.playerCount && (
-                    <span className="flex items-center gap-1 font-medium">
-                      <Users className="size-3.5" />
+                    <span className="flex items-center gap-1 font-medium whitespace-nowrap">
+                      <Users className="size-3.5" aria-hidden="true" />
                       {exercise.playerCount.min}–{exercise.playerCount.max}p
                     </span>
                   )}
-                  <span className="truncate max-w-[80px]">
+                  <span className="truncate max-w-[90px] font-medium" title={exercise.ageGroups.join(", ")}>
                     {exercise.ageGroups[0] || "All"}
                   </span>
                 </div>
-                <span className="inline-flex items-center gap-1 font-semibold text-[var(--fc-green)] group-hover:translate-x-0.5 transition-transform">
-                  View <ArrowRight className="size-3.5" />
+                <span className="inline-flex items-center gap-1 font-semibold text-[var(--fc-green)] group-hover:translate-x-0.5 transition-transform shrink-0 whitespace-nowrap">
+                  View <ArrowRight className="size-3.5" aria-hidden="true" />
                 </span>
               </div>
             </button>

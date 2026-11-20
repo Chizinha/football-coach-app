@@ -18,12 +18,13 @@ export function PitchDiagramView({ diagram, title = "Tactical Exercise Pitch Dia
   const pitchType = diagram.pitchType || "box";
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-[var(--fc-border-strong)] bg-[#e8f2ea] shadow-xs ${className}`}>
+    <div className={`overflow-hidden rounded-xl border border-[var(--fc-border-strong)] bg-[#e8f2ea] shadow-xs aspect-[1000/600] flex items-center justify-center ${className}`}>
       <svg
         viewBox="0 0 1000 600"
-        className="w-full h-auto block select-none"
+        className="w-full h-full block select-none"
         role="img"
         aria-label={title}
+        preserveAspectRatio="xMidYMid meet"
       >
         <title>{title}</title>
         <desc>Tactical football diagram displaying pitch layout, players, cones, ball, and movement vectors.</desc>

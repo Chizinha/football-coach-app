@@ -167,13 +167,13 @@ export function ClubLibraryView({
       {activeTab === "exercises" && (
         <div className="space-y-5">
           {filteredExercises.length > 0 ? (
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 items-stretch">
               {filteredExercises.map((exercise) => (
                 <div
                   key={exercise.id}
-                  className="group flex flex-col justify-between rounded-xl border border-[var(--fc-border)] bg-white p-5 text-left shadow-xs transition hover:border-[#6f8374] hover:shadow-md"
+                  className="group flex flex-col justify-between rounded-xl border border-[var(--fc-border)] bg-white p-5 text-left shadow-xs transition hover:border-[#6f8374] hover:shadow-md h-full"
                 >
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     {/* Header: Theme & Creator */}
                     <div className="flex items-center justify-between gap-2 mb-2">
                       <span className="text-xs font-bold uppercase tracking-wider text-[var(--fc-forest)]">
@@ -191,14 +191,18 @@ export function ClubLibraryView({
                       {exercise.title}
                     </button>
 
-                    <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--fc-text-muted)]">
+                    <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--fc-text-muted)] flex-1">
                       {exercise.description}
                     </p>
 
                     {/* Diagram Preview */}
                     {exercise.diagram && exercise.diagram.objects.length > 0 && (
-                      <div className="mt-3.5 overflow-hidden rounded-lg border border-[var(--fc-border)] bg-[#e8f2ea]/60">
-                        <PitchDiagramView diagram={exercise.diagram} title={exercise.title} className="max-h-28" />
+                      <div className="mt-3.5 w-full aspect-[16/10] overflow-hidden rounded-lg border border-[var(--fc-border)] bg-[#e8f2ea]/60 flex items-center justify-center">
+                        <PitchDiagramView
+                          diagram={exercise.diagram}
+                          title={exercise.title}
+                          className="w-full h-full border-0 shadow-none rounded-none"
+                        />
                       </div>
                     )}
                   </div>
